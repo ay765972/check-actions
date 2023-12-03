@@ -1,18 +1,18 @@
-name: CI
-
+name: pull request comment
 on:
-  push:
+  issue_comment:
+    types: [created, edited, deleted]
+    branches:
+      - "**"
 
 jobs:
-  test:
-    name: Lint
+  pr_commented:
+    # This job only runs for pull request comments
+    name: PR comment
+    if: ${{ github.event.issue.pull_request }}
     runs-on: ubuntu-latest
     steps:
-      - name: Debug Event
-        run: |
-          echo "Comment Body: ${{ github.event.comment.body }}"
-          echo "Is Pull Request: ${{ github.event.issue.pull_request }}"
-      - name: Check if comment contains "CI-RUN"
-        if: contains(github.event.comment.body, 'CI-RUN') && github.event.issue.pull_request
-        run: |
-          echo say hello
+      - run: |
+          echo A comment on PR $NUMBER
+        env:
+          NUMBER: ${{ github.event.issue.number }}
