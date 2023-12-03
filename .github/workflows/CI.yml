@@ -1,8 +1,8 @@
 name: CI
 
 on:
-  issue_comment:
-    types: [created, edited, deleted]
+  pull_request_comment:
+    types: [submitted, edited, dismissed]
 
 jobs:
   test:
