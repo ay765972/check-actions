@@ -1,0 +1,14 @@
+name: CI
+
+on:
+  push:
+
+jobs:
+  test:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+      - run: |
+          echo "Comment Body: ${{ github.event.comment.body }}"
