@@ -1,18 +1,18 @@
 name: pull request comment
+
 on:
-  issue_comment:
+  pull_request_review_comment:
     types: [created, edited, deleted]
-    branches:
-      - "**"
 
 jobs:
   pr_commented:
     # This job only runs for pull request comments
     name: PR comment
-    if: ${{ github.event.issue.pull_request }}
+    if: ${{ github.event.pull_request }}
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          echo A comment on PR $NUMBER
+      - name: Run command
+        run: |
+          echo "A comment on PR $NUMBER"
         env:
-          NUMBER: ${{ github.event.issue.number }}
+          NUMBER: ${{ github.event.pull_request.number }}
