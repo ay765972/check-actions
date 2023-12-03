@@ -7,8 +7,13 @@ jobs:
   test:
     name: Lint
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-      - run: |
+      - name: Debug Event
+        run: |
           echo "Comment Body: ${{ github.event.comment.body }}"
+          echo "Is Pull Request: ${{ github.event.issue.pull_request }}"
+          echo "Event: ${{ toJson(github.event) }}"
+      - name: Check if comment contains "CI-RUN"
+        if: contains(github.event.comment.body, 'CI-RUN') && github.event.issue.pull_request
+        run: |
+          echo say hello
