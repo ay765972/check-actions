@@ -8,7 +8,7 @@ jobs:
   pr_commented:
     # This job only runs for pull request comments
     name: PR comment
-    if: ${{ github.event.pull_request }}
+    if: ${{ github.event_name == 'pull_request_review_comment' && github.event.pull_request }}
     runs-on: ubuntu-latest
     steps:
       - name: Run command
