@@ -1,26 +1,18 @@
 name: CI
 
 on:
-  issue_comment:
+  push:
 
 jobs:
   test:
     name: Lint
     runs-on: ubuntu-latest
-
     steps:
-      # This job only runs for pull request comments
-      - name: Github API Request
-        id: request
-        uses: octokit/request-action@v2.0.0
-        with:
-          route: ${{ github.event.issue.pull_request.url }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Checkout PR Branch
-        uses: actions/checkout@v2
-        with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        repository: ${{ fromJson(steps.request.outputs.data).head.repo.full_name }}
-        ref: ${{ steps.pr_data.outputs.branch }}
+      - name: Debug Event
+        run: |
+          echo "Comment Body: ${{ github.event.comment.body }}"
+          echo "Is Pull Request: ${{ github.event.issue.pull_request }}"
+      - name: Check if comment contains "CI-RUN"
+        if: contains(github.event.comment.body, 'CI-RUN') && github.event.issue.pull_request
+        run: |
+          echo say hello
