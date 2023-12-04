@@ -3,6 +3,9 @@ on:
     types: [opened]
   issue_comment:
     types: [created]
+    
+    # hereh waht
+    
 jobs:
   deploy:
     runs-on: ubuntu-latest
