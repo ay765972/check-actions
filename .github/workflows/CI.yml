@@ -1,16 +1,20 @@
-name: pull request comment
+name: CI
+
 on:
   issue_comment:
     types: [created, edited, deleted]
 
 jobs:
-  pr_commented:
-    # This job only runs for pull request comments
-    name: PR comment
-    if: contains(github.event.comment.body, '/support')
+  test:
+    name: Build & Lint
+    if: contains(github.event.comment.body, 'run-actions')
     runs-on: ubuntu-latest
+
     steps:
-      - run: |
-          echo A comment on PR $NUMBER
-        env:
-          NUMBER: ${{ github.event.issue.number }}
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
