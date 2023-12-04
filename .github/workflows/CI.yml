@@ -11,6 +11,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Github API Request
+          id: request
+          uses: octokit/request-action@v2.0.0
+        with:
+          route: ${{ github.event.issue.pull_request.url }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+
       - name: Checkout code
         uses: actions/checkout@v2
 
