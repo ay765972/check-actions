@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Github API Request
+        uses: octokit/request-action@v2.0.0
+
       - name: Checkout code
         uses: actions/checkout@v2
 
