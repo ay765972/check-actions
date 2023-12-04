@@ -1,14 +1,16 @@
 name: pull request comment
-
 on:
-  pull_request_review_comment:
-    types: [created]
+  issue_comment:
+    types: [created, edited, deleted]
 
 jobs:
   pr_commented:
+    # This job only runs for pull request comments
     name: PR comment
+    if: ${{ github.event.issue.pull_request }}
     runs-on: ubuntu-latest
     steps:
-      - name: Debug event payload
-        run: |
-          echo "Event payload: ${{ toJson(github.event) }}"
+      - run: |
+          echo A comment on PR $NUMBER
+        env:
+          NUMBER: ${{ github.event.issue.number }}
