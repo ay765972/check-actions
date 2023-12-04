@@ -3,6 +3,7 @@ name: CI
 on:
   issue_comment:
     types: [created, edited, deleted]
+     # test
 
 jobs:
   test:
