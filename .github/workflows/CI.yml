@@ -30,3 +30,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
+
+      - name: Check for corresponding test file
+        run: |
+          for file in $(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '.tsx$'); do
+            echo file
+            test_file="${file%.tsx}.test.ts"
+            if [ ! -f "$test_file" ]; then
+              echo "Error: Corresponding test file '$test_file' is missing for file '$file'."
+              exit 1
+            fi
+          done    
